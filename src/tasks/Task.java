@@ -4,15 +4,15 @@ import java.util.Objects;
 
 public class Task {
 
-    private String name;
-    private String description;
-    private int id;
-    private TaskStatus status;
+    protected int id;
+    protected String name;
+    protected String description;
+    protected TaskStatus status;
 
-    public Task(String name, String description, TaskStatus taskStatus) {
+    public Task(String name, String description) {
         this.name = name;
         this.description = description;
-        this.status = taskStatus;
+        this.status = TaskStatus.NEW;
     }
 
     public String getName() {

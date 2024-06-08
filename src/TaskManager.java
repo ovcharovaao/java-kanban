@@ -4,9 +4,9 @@ import java.util.ArrayList;
 
 public class TaskManager {
 
-    HashMap<Integer, Task> tasks = new HashMap<>();
-    HashMap<Integer, Epic> epics = new HashMap<>();
-    HashMap<Integer, Subtask> subtasks = new HashMap<>();
+    protected HashMap<Integer, Task> tasks = new HashMap<>();
+    protected HashMap<Integer, Epic> epics = new HashMap<>();
+    protected HashMap<Integer, Subtask> subtasks = new HashMap<>();
 
     private int nextID = 1;
 

@@ -6,23 +6,23 @@ public class Main {
 
         TaskManager taskManager = new TaskManager();
 
-        Task buyTickets = new Task("Купить билеты", "До 7 июля", TaskStatus.NEW);
+        Task buyTickets = new Task("Купить билеты", "До 7 июля");
         taskManager.addTask(buyTickets);
         System.out.println(buyTickets);
         System.out.println();
 
-        Task washCage = new Task("Помыть клетку", "Помыть клетку и насыпать свежий корм для попугая", TaskStatus.IN_PROGRESS);
+        Task washCage = new Task("Помыть клетку", "Помыть клетку и насыпать свежий корм для попугая");
         taskManager.addTask(washCage);
         System.out.println(washCage);
         System.out.println();
 
-        Epic buyFoods = new Epic("Купить продукты", "Купить продукты на неделю", TaskStatus.NEW);
+        Epic buyFoods = new Epic("Купить продукты", "Купить продукты на неделю");
         taskManager.addEpic(buyFoods);
 
-        Subtask buyBread = new Subtask("Купить хлеб", "Белый, чёрный и булочки", TaskStatus.NEW,
+        Subtask buyBread = new Subtask("Купить хлеб", "Белый, чёрный и булочки",
                 buyFoods.getID());
         taskManager.addSubtask(buyBread);
-        Subtask buyMilk = new Subtask("Купить молоко", "Жирность 3,5%", TaskStatus.NEW,
+        Subtask buyMilk = new Subtask("Купить молоко", "Жирность 3,5%",
                 buyFoods.getID());
         taskManager.addSubtask(buyMilk);
 
@@ -31,11 +31,11 @@ public class Main {
         System.out.println(buyMilk);
         System.out.println();
 
-        Epic doLaundry = new Epic("Постирать бельё", "На выходных", TaskStatus.NEW);
+        Epic doLaundry = new Epic("Постирать бельё", "На выходных");
         taskManager.addEpic(doLaundry);
 
         Subtask washBedding = new Subtask("Постирать постельное бельё", "Постирать с новым порошком",
-                TaskStatus.NEW, buyFoods.getID());
+                buyFoods.getID());
         taskManager.addSubtask(washBedding);
 
         System.out.println(doLaundry);
