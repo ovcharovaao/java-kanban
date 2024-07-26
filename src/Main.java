@@ -1,7 +1,7 @@
 import managers.InMemoryTaskManager;
 import tasks.*;
 
-public class Main {
+    public class Main {
 
     private static final InMemoryTaskManager taskManager = new InMemoryTaskManager();
 
@@ -11,7 +11,7 @@ public class Main {
     }
 
     private static void addTasks() {
-        Task buyTickets = new Task("Купить билеты", "До 7 июля");
+        Task buyTickets = new Task("Купить билеты", "До 7 августа");
         taskManager.addTask(buyTickets);
         taskManager.getTaskByID(buyTickets.getID());
 

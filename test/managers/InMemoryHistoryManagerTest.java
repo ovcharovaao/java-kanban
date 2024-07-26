@@ -1,34 +1,66 @@
 package managers;
 
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import tasks.Epic;
 import tasks.Task;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 class InMemoryHistoryManagerTest {
     InMemoryHistoryManager historyManager = new InMemoryHistoryManager();
-    Task task;
-    InMemoryTaskManager taskManager;
+    static Task task;
+    static Task task1;
+    static Epic epic;
+
+    @BeforeAll
+    static void createTasks() {
+        task = new Task("Name", "Description");
+        task1 = new Task("Name1", "Description1");
+        epic = new Epic("Name", "Description");
+
+        task.setID(1);
+        task1.setID(2);
+        epic.setID(3);
+    }
 
     @Test
     void add() {
         historyManager.add(task);
-        final ArrayList<Task> history = historyManager.getHistory();
+        final List<Task> history = historyManager.getHistory();
         assertNotNull(history, "История не пустая.");
         assertEquals(1, history.size(), "История не пустая.");
     }
 
     @Test
-    void getHistoryShouldReturnOnly10Tasks() {
-        for (int i = 0; i < 12; i++) {
-            historyManager.add(task);
-        }
+    void remove() {
+        historyManager.add(task);
+        historyManager.add(task1);
+        historyManager.add(epic);
+        historyManager.remove(epic.getID());
+        List<Task> list = historyManager.getHistory();
+        Assertions.assertEquals(list.size(), 2);
+    }
 
-        ArrayList<Task> history = historyManager.getHistory();
+    @Test
+    void getHistory() {
+        historyManager.add(task);
+        historyManager.add(epic);
+        List<Task> list = historyManager.getHistory();
+        Assertions.assertEquals(list.size(), 2);
+    }
 
-        assertEquals(10, history.size(), "Неверное количество просмотренных задач в истории");
+    @Test
+    void shouldBeNoDuplicatesInHistory() {
+        historyManager.add(task);
+        historyManager.add(task1);
+        historyManager.add(epic);
+        historyManager.add(task1);
+        historyManager.add(task);
+        assertEquals(historyManager.getHistory(), List.of(task, task1, epic));
     }
 }
