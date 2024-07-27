@@ -44,9 +44,9 @@ class InMemoryTaskManagerTest {
         List<Task> historyList = taskManager.getHistory();
 
         assertEquals(3, taskManager.getHistory().size());
-        assertEquals(task, historyList.get(0), "Задачи не совпадают");
+        assertEquals(subtask, historyList.get(0), "Задачи не совпадают");
         assertEquals(epic, historyList.get(1), "Задачи не совпадают");
-        assertEquals(subtask, historyList.get(2), "Задачи не совпадают");
+        assertEquals(task, historyList.get(2), "Задачи не совпадают");
     }
 
     @Test

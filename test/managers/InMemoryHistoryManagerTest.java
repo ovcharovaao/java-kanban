@@ -61,6 +61,6 @@ class InMemoryHistoryManagerTest {
         historyManager.add(epic);
         historyManager.add(task1);
         historyManager.add(task);
-        assertEquals(historyManager.getHistory(), List.of(task, task1, epic));
+        assertEquals(historyManager.getHistory(), List.of(epic, task1, task));
     }
 }

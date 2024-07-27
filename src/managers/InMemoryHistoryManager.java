@@ -3,6 +3,7 @@ package managers;
 import tasks.Task;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
@@ -29,9 +30,12 @@ public class InMemoryHistoryManager implements HistoryManager {
 
     public List<Task> getTasks() {
         List<Task> historyList = new ArrayList<>();
+        List<Integer> keys = new ArrayList<>(historyMap.keySet());
 
-        for (Node node : historyMap.values()) {
-            historyList.add(node.task);
+        Collections.reverse(keys);
+
+        for (Integer key : keys) {
+            historyList.add(historyMap.get(key).task);
         }
 
         return historyList;
