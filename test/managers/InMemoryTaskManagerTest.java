@@ -6,6 +6,7 @@ import tasks.Subtask;
 import tasks.Task;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -40,12 +41,12 @@ class InMemoryTaskManagerTest {
         taskManager.getEpicByID(2);
         taskManager.getSubtaskByID(3);
 
-        ArrayList<Task> historyList = taskManager.getHistory();
+        List<Task> historyList = taskManager.getHistory();
 
         assertEquals(3, taskManager.getHistory().size());
-        assertEquals(task, historyList.get(0), "Задачи не совпадают");
+        assertEquals(subtask, historyList.get(0), "Задачи не совпадают");
         assertEquals(epic, historyList.get(1), "Задачи не совпадают");
-        assertEquals(subtask, historyList.get(2), "Задачи не совпадают");
+        assertEquals(task, historyList.get(2), "Задачи не совпадают");
     }
 
     @Test
@@ -59,8 +60,12 @@ class InMemoryTaskManagerTest {
     @Test
     void deleteEpics() {
         Epic epic = new Epic("Name", "Description");
+        taskManager.addEpic(epic);
+
         Subtask subtask1 = new Subtask("Name1", "Description1", epic.getID());
         Subtask subtask2 = new Subtask("Name2", "Description2", epic.getID());
+        taskManager.addSubtask(subtask1);
+        taskManager.addSubtask(subtask2);
 
         taskManager.deleteEpics();
         ArrayList<Epic> epics = taskManager.printEpics();
@@ -78,6 +83,21 @@ class InMemoryTaskManagerTest {
 
         ArrayList<Task> tasks = taskManager.printTasks();
         assertTrue(tasks.isEmpty(), "Список тасков должен быть пуст.");
+    }
+
+    @Test
+    void deleteSubtaskByID() {
+        Epic epic = new Epic("Name", "Description");
+        taskManager.addEpic(epic);
+
+        Subtask subtask1 = new Subtask("Name1", "Description1", epic.getID());
+        Subtask subtask2 = new Subtask("Name2", "Description2", epic.getID());
+        taskManager.addSubtask(subtask1);
+        taskManager.addSubtask(subtask2);
+
+        taskManager.deleteSubtaskByID(subtask1.getID());
+
+        assertEquals(taskManager.printEpicSubtasks(epic), List.of(subtask2));
     }
 
     @Test
