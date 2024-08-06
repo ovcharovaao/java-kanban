@@ -18,54 +18,19 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
             bw.write("id,type,name,status,description,epic\n");
 
             for (Task task : getTasks()) {
-                bw.write(toString(task) + "\n");
+                bw.write(CSVFormat.toString(task) + "\n");
             }
 
             for (Epic epic : getEpics()) {
-                bw.write(toString(epic) + "\n");
+                bw.write(CSVFormat.toString(epic) + "\n");
             }
 
             for (Subtask subtask : getSubtasks()) {
-                bw.write(toString(subtask) + "\n");
+                bw.write(CSVFormat.toString(subtask) + "\n");
             }
 
         } catch (IOException e) {
             throw new ManagerSaveException("Ошибка сохранения данных в файл", e);
-        }
-    }
-
-    private String toString(Task task) {
-        return task.toString();
-    }
-
-    private static Task fromString(String value) {
-        String[] parts = value.split(",");
-
-        int id = Integer.parseInt(parts[0]);
-        TaskType type = TaskType.valueOf(parts[1]);
-        String name = parts[2];
-        TaskStatus status = TaskStatus.valueOf(parts[3]);
-        String description = parts[4];
-
-        switch (type) {
-            case TASK:
-                Task task = new Task(name, description);
-                task.setID(id);
-                task.setStatus(status);
-                return task;
-            case EPIC:
-                Epic epic = new Epic(name, description);
-                epic.setID(id);
-                epic.setStatus(status);
-                return epic;
-            case SUBTASK:
-                int epicID = Integer.parseInt(parts[5]);
-                Subtask subtask = new Subtask(name, description, epicID);
-                subtask.setID(id);
-                subtask.setStatus(status);
-                return subtask;
-            default:
-                throw new IllegalArgumentException("Неизвестный тип задачи: " + type);
         }
     }
 
@@ -76,7 +41,7 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
             List<String> tasksInStrings = Files.readAllLines(file.toPath());
 
             for (int i = 1; i < tasksInStrings.size(); i++) {
-                Task task = fromString(tasksInStrings.get(i));
+                Task task = CSVFormat.fromString(tasksInStrings.get(i));
                 switch (task.getTaskType()) {
                     case TASK:
                         manager.addTask(task);
