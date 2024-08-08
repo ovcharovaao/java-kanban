@@ -21,7 +21,7 @@ class InMemoryTaskManagerTest {
         assertNotNull(savedTask, "Задача не найдена.");
         assertEquals(task, savedTask, "Задачи не совпадают.");
 
-        final ArrayList<Task> tasks = taskManager.printTasks();
+        final ArrayList<Task> tasks = taskManager.getTasks();
 
         assertNotNull(tasks, "Задачи не возвращаются.");
         assertEquals(1, tasks.size(), "Неверное количество задач.");
@@ -68,8 +68,8 @@ class InMemoryTaskManagerTest {
         taskManager.addSubtask(subtask2);
 
         taskManager.deleteEpics();
-        ArrayList<Epic> epics = taskManager.printEpics();
-        ArrayList<Subtask> subtasks = taskManager.printSubtasks();
+        ArrayList<Epic> epics = taskManager.getEpics();
+        ArrayList<Subtask> subtasks = taskManager.getSubtasks();
 
         assertTrue(epics.isEmpty(), "Список эпиков должен быть пуст.");
         assertTrue(subtasks.isEmpty(), "После удаления всех эпиков список сабтасков должен быть пуст.");
@@ -81,7 +81,7 @@ class InMemoryTaskManagerTest {
         taskManager.addTask(task);
         taskManager.deleteTaskByID(task.getID());
 
-        ArrayList<Task> tasks = taskManager.printTasks();
+        ArrayList<Task> tasks = taskManager.getTasks();
         assertTrue(tasks.isEmpty(), "Список тасков должен быть пуст.");
     }
 
@@ -97,7 +97,7 @@ class InMemoryTaskManagerTest {
 
         taskManager.deleteSubtaskByID(subtask1.getID());
 
-        assertEquals(taskManager.printEpicSubtasks(epic), List.of(subtask2));
+        assertEquals(taskManager.getEpicSubtasks(epic), List.of(subtask2));
     }
 
     @Test
@@ -125,7 +125,7 @@ class InMemoryTaskManagerTest {
         Subtask subtask2 = new Subtask("Name2", "Description2", epic.getID());
         taskManager.addSubtask(subtask2);
 
-        ArrayList<Subtask> subtasks = taskManager.printEpicSubtasks(epic);
+        ArrayList<Subtask> subtasks = taskManager.getEpicSubtasks(epic);
 
         assertEquals(2, subtasks.size(), "Неверное количество сабтасков эпика");
     }

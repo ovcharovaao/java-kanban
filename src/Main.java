@@ -48,19 +48,19 @@ import tasks.*;
 
     private static void printAllTasks() {
         System.out.println("Задачи:");
-        for (Task task : taskManager.printTasks()) {
+        for (Task task : taskManager.getTasks()) {
             System.out.println(task);
         }
         System.out.println("Эпики:");
-        for (Epic epic : taskManager.printEpics()) {
+        for (Epic epic : taskManager.getEpics()) {
             System.out.println(epic);
 
-            for (Task task : taskManager.printEpicSubtasks(epic)) {
+            for (Task task : taskManager.getEpicSubtasks(epic)) {
                 System.out.println("--> " + task);
             }
         }
         System.out.println("Подзадачи:");
-        for (Task subtask : taskManager.printSubtasks()) {
+        for (Task subtask : taskManager.getSubtasks()) {
             System.out.println(subtask);
         }
 

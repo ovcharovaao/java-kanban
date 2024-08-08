@@ -8,11 +8,13 @@ public class Task {
     protected String name;
     protected String description;
     protected TaskStatus status;
+    protected TaskType type;
 
     public Task(String name, String description) {
         this.name = name;
         this.description = description;
         this.status = TaskStatus.NEW;
+        this.type = TaskType.TASK;
     }
 
     public String getName() {
@@ -47,6 +49,10 @@ public class Task {
         this.status = taskStatus;
     }
 
+    public TaskType getTaskType() {
+        return type;
+    }
+
     @Override
     public boolean equals(Object obj) {
         if (this == obj) return true;
@@ -72,11 +78,7 @@ public class Task {
 
     @Override
     public String toString() {
-        return "tasks.Task{" +
-                "name='" + name + '\'' +
-                ", description='" + description + '\'' +
-                ", id=" + id +
-                ", status=" + status +
-                '}';
+        return getID() + "," + TaskType.TASK + "," + getName() + "," + getStatus() + ","
+                + getDescription();
     }
 }
