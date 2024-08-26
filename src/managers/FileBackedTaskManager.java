@@ -1,9 +1,16 @@
 package managers;
 
-import tasks.*;
+import tasks.Epic;
+import tasks.Subtask;
+import tasks.Task;
 
-import java.io.*;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.nio.file.Files;
+import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.List;
 
 public class FileBackedTaskManager extends InMemoryTaskManager {
@@ -15,7 +22,7 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
 
     private void save() {
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(file))) {
-            bw.write("id,type,name,status,description,epic\n");
+            bw.write("id,type,name,status,description,startTime,duration,epic\n");
 
             for (Task task : getTasks()) {
                 bw.write(CSVFormat.toString(task) + "\n");
@@ -146,16 +153,19 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
         File tempFile = File.createTempFile("TestFile", ".csv");
         FileBackedTaskManager manager = new FileBackedTaskManager(tempFile);
 
-        Task task1 = new Task("Task1", "Description1");
+        Task task1 = new Task("Task1", "Description1",
+                LocalDateTime.of(2024, 8, 25, 10, 0, 0), Duration.ofMinutes(20));
         manager.addTask(task1);
 
         Epic epic1 = new Epic("Epic1", "Description1");
         manager.addEpic(epic1);
 
-        Subtask subtask1 = new Subtask("Subtask1", "Description", epic1.getID());
+        Subtask subtask1 = new Subtask("Subtask1", "Description", epic1.getID(),
+                LocalDateTime.of(2024, 8, 25, 10, 30, 0), Duration.ofMinutes(20));
         manager.addSubtask(subtask1);
 
-        Subtask subtask2 = new Subtask("Subtask2", "Description", epic1.getID());
+        Subtask subtask2 = new Subtask("Subtask2", "Description", epic1.getID(),
+                LocalDateTime.of(2024, 8, 25, 11, 0, 0), Duration.ofMinutes(20));
         manager.addSubtask(subtask2);
 
         FileBackedTaskManager loadedManager = FileBackedTaskManager.loadFromFile(tempFile);
