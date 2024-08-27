@@ -3,6 +3,9 @@ package tasks;
 import managers.InMemoryTaskManager;
 import org.junit.jupiter.api.Test;
 
+import java.time.Duration;
+import java.time.LocalDateTime;
+
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 class SubtaskTest {
@@ -12,9 +15,11 @@ class SubtaskTest {
     void tasksWithEqualIdShouldBeEqual() {
         Epic epic = new Epic("Name", "Description");
         taskManager.addEpic(epic);
-        Subtask subtask1 = new Subtask("Name1", "Description1", epic.getID());
+        Subtask subtask1 = new Subtask("Name1", "Description1", epic.getID(),
+                LocalDateTime.of(2024, 8, 25, 10, 0), Duration.ofMinutes(30));
         taskManager.addSubtask(subtask1);
-        Subtask subtask2 = new Subtask("Name2", "Description2", epic.getID());
+        Subtask subtask2 = new Subtask("Name2", "Description2", epic.getID(),
+                LocalDateTime.of(2024, 8, 25, 10, 30), Duration.ofMinutes(30));
         taskManager.addSubtask(subtask2);
 
         int idSubtask1 = subtask1.getID();

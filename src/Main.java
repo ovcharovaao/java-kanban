@@ -1,7 +1,10 @@
 import managers.InMemoryTaskManager;
 import tasks.*;
 
-    public class Main {
+import java.time.Duration;
+import java.time.LocalDateTime;
+
+public class Main {
 
     private static final InMemoryTaskManager taskManager = new InMemoryTaskManager();
 
@@ -11,11 +14,13 @@ import tasks.*;
     }
 
     private static void addTasks() {
-        Task buyTickets = new Task("Купить билеты", "До 7 августа");
+        Task buyTickets = new Task("Купить билеты", "До 7 августа",
+                LocalDateTime.of(2024,8,25,10,0, 0), Duration.ofMinutes(20));
         taskManager.addTask(buyTickets);
         taskManager.getTaskByID(buyTickets.getID());
 
-        Task washCage = new Task("Помыть клетку", "Помыть клетку и насыпать свежий корм для попугая");
+        Task washCage = new Task("Помыть клетку", "Помыть клетку и насыпать свежий корм для попугая",
+                LocalDateTime.of(2024,8,25,10,30, 0), Duration.ofMinutes(20));
         taskManager.addTask(washCage);
         taskManager.getTaskByID(washCage.getID());
 
@@ -23,12 +28,12 @@ import tasks.*;
         taskManager.addEpic(buyFoods);
         taskManager.getEpicByID(buyFoods.getID());
 
-        Subtask buyBread = new Subtask("Купить хлеб", "Белый, чёрный и булочки",
-                buyFoods.getID());
+        Subtask buyBread = new Subtask("Купить хлеб", "Белый, чёрный и булочки", buyFoods.getID(),
+                LocalDateTime.of(2024,8,25,11,0, 0), Duration.ofMinutes(20));
         taskManager.addSubtask(buyBread);
         taskManager.getSubtaskByID(buyBread.getID());
-        Subtask buyMilk = new Subtask("Купить молоко", "Жирность 3,5%",
-                buyFoods.getID());
+        Subtask buyMilk = new Subtask("Купить молоко", "Жирность 3,5%", buyFoods.getID(),
+                LocalDateTime.of(2024,8,25,11,30, 0), Duration.ofMinutes(20));
         taskManager.addSubtask(buyMilk);
         taskManager.getSubtaskByID(buyMilk.getID());
 
@@ -37,7 +42,8 @@ import tasks.*;
         taskManager.getEpicByID(doLaundry.getID());
 
         Subtask washBedding = new Subtask("Постирать постельное бельё", "Постирать с новым порошком",
-                doLaundry.getID());
+                doLaundry.getID(), LocalDateTime.of(2024,8,25,12,0, 0),
+                Duration.ofMinutes(20));
         taskManager.addSubtask(washBedding);
         taskManager.getSubtaskByID(washBedding.getID());
         taskManager.getSubtaskByID(washBedding.getID());

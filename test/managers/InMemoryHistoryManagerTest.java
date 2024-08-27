@@ -6,6 +6,8 @@ import org.junit.jupiter.api.Test;
 import tasks.Epic;
 import tasks.Task;
 
+import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -19,8 +21,10 @@ class InMemoryHistoryManagerTest {
 
     @BeforeAll
     static void createTasks() {
-        task = new Task("Name", "Description");
-        task1 = new Task("Name1", "Description1");
+        task = new Task("Name", "Description",
+                LocalDateTime.of(2024, 8, 25, 10, 0), Duration.ofMinutes(30));
+        task1 = new Task("Name1", "Description1",
+                LocalDateTime.of(2024, 8, 25, 10, 30), Duration.ofMinutes(30));
         epic = new Epic("Name", "Description");
 
         task.setID(1);
