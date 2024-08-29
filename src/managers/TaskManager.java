@@ -42,7 +42,7 @@ public interface TaskManager {
 
     void deleteTaskByID(int id) throws NotFoundException;
 
-    void deleteEpicByID(int id) ;
+    void deleteEpicByID(int id);
 
     void deleteSubtaskByID(int id) throws NotFoundException;
 
