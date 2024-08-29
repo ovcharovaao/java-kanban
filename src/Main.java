@@ -9,11 +9,6 @@ public class Main {
 
     private static final InMemoryTaskManager taskManager = new InMemoryTaskManager();
 
-    /*public static void main(String[] args) {
-        addTasks();
-        printAllTasks();
-    }*/
-
     private static void addTasks() throws NotFoundException {
         Task buyTickets = new Task("Купить билеты", "До 7 августа",
                 LocalDateTime.of(2024,8,25,10,0, 0), Duration.ofMinutes(20));
