@@ -1,5 +1,6 @@
 package managers;
 
+import managers.exception.NotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import tasks.Epic;
@@ -37,7 +38,7 @@ abstract class TaskManagerTest<T extends TaskManager> {
     }
 
     @Test
-    void addTask() {
+    void addTask() throws NotFoundException {
         Task savedTask = taskManager.getTaskByID(task.getID());
 
         assertNotNull(savedTask, "Задача не найдена.");
@@ -51,7 +52,7 @@ abstract class TaskManagerTest<T extends TaskManager> {
     }
 
     @Test
-    void newTaskAndAddedTaskInManagerShouldBeEquals() {
+    void newTaskAndAddedTaskInManagerShouldBeEquals() throws NotFoundException {
         assertEquals(task, taskManager.getTaskByID(1), "Задачи не совпадают");
     }
 
@@ -80,7 +81,7 @@ abstract class TaskManagerTest<T extends TaskManager> {
     }
 
     @Test
-    void deleteTaskByIDTest() {
+    void deleteTaskByIDTest() throws NotFoundException {
         taskManager.deleteTaskByID(task.getID());
         ArrayList<Task> tasks = (ArrayList<Task>) taskManager.getTasks();
 
@@ -88,7 +89,7 @@ abstract class TaskManagerTest<T extends TaskManager> {
     }
 
     @Test
-    void deleteSubtaskByIDTest() {
+    void deleteSubtaskByIDTest() throws NotFoundException {
         taskManager.deleteSubtaskByID(subtask1.getID());
 
         assertEquals(taskManager.getEpicSubtasks(epic), List.of(subtask2));
@@ -118,13 +119,13 @@ abstract class TaskManagerTest<T extends TaskManager> {
     }
 
     @Test
-    void AllSubtasksShouldHaveEpic() {
+    void AllSubtasksShouldHaveEpic() throws NotFoundException {
         assertNotNull(taskManager.getEpicByID(subtask1.getEpicID()));
         assertEquals(epic, taskManager.getEpicByID(subtask1.getEpicID()), "Эпики не совпадают");
     }
 
     @Test
-    public void updateEpicStatusToNewTestIfAllSubtaskAreNew() {
+    public void updateEpicStatusToNewTestIfAllSubtaskAreNew() throws NotFoundException {
         subtask1.setStatus(TaskStatus.NEW);
         taskManager.updateSubtask(subtask1);
         subtask2.setStatus(TaskStatus.NEW);
@@ -133,7 +134,7 @@ abstract class TaskManagerTest<T extends TaskManager> {
     }
 
     @Test
-    public void updateEpicStatusToDoneTestIfAllSubtaskAreDone() {
+    public void updateEpicStatusToDoneTestIfAllSubtaskAreDone() throws NotFoundException {
         subtask1.setStatus(TaskStatus.DONE);
         taskManager.updateSubtask(subtask1);
         subtask2.setStatus(TaskStatus.DONE);
@@ -142,7 +143,7 @@ abstract class TaskManagerTest<T extends TaskManager> {
     }
 
     @Test
-    public void updateEpicStatusToInProgressTestIfOneSubtaskIsNew() {
+    public void updateEpicStatusToInProgressTestIfOneSubtaskIsNew() throws NotFoundException {
         subtask1.setStatus(TaskStatus.DONE);
         taskManager.updateSubtask(subtask1);
         subtask2.setStatus(TaskStatus.NEW);
