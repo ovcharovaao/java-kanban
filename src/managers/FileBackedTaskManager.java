@@ -1,5 +1,7 @@
 package managers;
 
+import managers.exception.ManagerSaveException;
+import managers.exception.NotFoundException;
 import tasks.Epic;
 import tasks.Subtask;
 import tasks.Task;
@@ -132,7 +134,7 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
     }
 
     @Override
-    public void deleteTaskByID(int id) {
+    public void deleteTaskByID(int id) throws NotFoundException {
         super.deleteTaskByID(id);
         save();
     }
@@ -144,7 +146,7 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
     }
 
     @Override
-    public void deleteSubtaskByID(int id) {
+    public void deleteSubtaskByID(int id) throws NotFoundException {
         super.deleteSubtaskByID(id);
         save();
     }

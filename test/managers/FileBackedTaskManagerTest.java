@@ -1,5 +1,7 @@
 package managers;
 
+import managers.exception.ManagerSaveException;
+import managers.exception.NotFoundException;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import tasks.Epic;
@@ -35,7 +37,7 @@ public class FileBackedTaskManagerTest extends TaskManagerTest<FileBackedTaskMan
     }
 
     @Test
-    void shouldSaveAndLoadTasks() {
+    void shouldSaveAndLoadTasks() throws NotFoundException {
         FileBackedTaskManager loadedManager = FileBackedTaskManager.loadFromFile(tempFile);
         Task loadedTask = loadedManager.getTaskByID(task.getID());
 
@@ -44,7 +46,7 @@ public class FileBackedTaskManagerTest extends TaskManagerTest<FileBackedTaskMan
     }
 
     @Test
-    void shouldSaveAndLoadEpics() {
+    void shouldSaveAndLoadEpics() throws NotFoundException {
         FileBackedTaskManager loadedManager = FileBackedTaskManager.loadFromFile(tempFile);
         Epic loadedEpic = loadedManager.getEpicByID(epic.getID());
 
@@ -53,7 +55,7 @@ public class FileBackedTaskManagerTest extends TaskManagerTest<FileBackedTaskMan
     }
 
     @Test
-    void shouldSaveAndLoadSubtasks() {
+    void shouldSaveAndLoadSubtasks() throws NotFoundException {
         FileBackedTaskManager loadedManager = FileBackedTaskManager.loadFromFile(tempFile);
         Subtask loadedSubtask = loadedManager.getSubtaskByID(subtask1.getID());
 

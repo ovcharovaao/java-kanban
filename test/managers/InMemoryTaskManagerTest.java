@@ -1,5 +1,6 @@
 package managers;
 
+import managers.exception.NotFoundException;
 import org.junit.jupiter.api.Test;
 import tasks.Task;
 
@@ -15,7 +16,7 @@ class InMemoryTaskManagerTest extends TaskManagerTest<InMemoryTaskManager> {
     }
 
     @Test
-    void getHistoryShouldReturnAllTasks() {
+    void getHistoryShouldReturnAllTasks() throws NotFoundException {
         taskManager.getTaskByID(1);
         taskManager.getEpicByID(2);
         taskManager.getSubtaskByID(3);

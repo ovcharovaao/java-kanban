@@ -1,5 +1,6 @@
 package managers;
 
+import managers.exception.NotFoundException;
 import tasks.*;
 
 import java.time.Duration;
@@ -99,29 +100,32 @@ public class InMemoryTaskManager implements TaskManager {
     }
 
     @Override
-    public Task getTaskByID(int id) {
+    public Task getTaskByID(int id) throws NotFoundException {
         Task task = tasks.get(id);
-        if (task != null) {
-            historyManager.add(task);
+        if (task == null) {
+            throw new NotFoundException("Задача не найдена");
         }
+        historyManager.add(task);
         return task;
     }
 
     @Override
-    public Epic getEpicByID(int id) {
+    public Epic getEpicByID(int id) throws NotFoundException {
         Epic epic = epics.get(id);
-        if (epic != null) {
-            historyManager.add(epic);
+        if (epic == null) {
+            throw new NotFoundException("Задача не найдена");
         }
+        historyManager.add(epic);
         return epic;
     }
 
     @Override
-    public Subtask getSubtaskByID(int id) {
+    public Subtask getSubtaskByID(int id) throws NotFoundException {
         Subtask subtask = subtasks.get(id);
-        if (subtask != null) {
-            historyManager.add(subtask);
+        if (subtask == null) {
+            throw new NotFoundException("Задача не найдена");
         }
+        historyManager.add(subtask);
         return subtask;
     }
 
@@ -176,7 +180,7 @@ public class InMemoryTaskManager implements TaskManager {
     }
 
     @Override
-    public void deleteTaskByID(int id) {
+    public void deleteTaskByID(int id) throws NotFoundException {
         historyManager.remove(id);
         prioritizedTasks.remove(getTaskByID(id));
         tasks.remove(id);
@@ -198,7 +202,7 @@ public class InMemoryTaskManager implements TaskManager {
     }
 
     @Override
-    public void deleteSubtaskByID(int id) {
+    public void deleteSubtaskByID(int id) throws NotFoundException {
         historyManager.remove(id);
         prioritizedTasks.remove(getSubtaskByID(id));
         Subtask subtask = subtasks.get(id);
